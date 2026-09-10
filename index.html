@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121826" />
+    <meta name="description" content="エド用のSF6ランクマッチ振り返りノート" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>ED Match Note</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">SF6 · ED PERSONAL ANALYSIS</p>
+          <h1>ED Match Note</h1>
+        </div>
+        <button id="new-review" class="primary-button" type="button">対戦を記録</button>
+      </header>
+
+      <section class="summary-grid" aria-label="直近の記録">
+        <article class="summary-card">
+          <span>直近10セット</span>
+          <strong id="recent-win-rate">—</strong>
+          <small>勝率</small>
+        </article>
+        <article class="summary-card">
+          <span>平均間合い</span>
+          <strong id="average-distance">—</strong>
+          <small>スタンス幅</small>
+        </article>
+        <article class="summary-card">
+          <span>要確認リプレイ</span>
+          <strong id="review-later-count">0</strong>
+          <small>後で見直す</small>
+        </article>
+      </section>
+
+      <section class="panel insight-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">NEXT FOCUS</p>
+            <h2>次の確認点</h2>
+          </div>
+        </div>
+        <div id="insights" class="insight-list">
+          <p class="empty-message">まず数セット記録すると、ダメージ傾向と距離から確認点を出す。</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RECENT MATCHES</p>
+            <h2>最近の対戦</h2>
+          </div>
+          <button id="export-data" class="text-button" type="button">書き出し</button>
+        </div>
+        <div id="recent-matches" class="match-list"></div>
+      </section>
+    </main>
+
+    <dialog id="review-dialog" class="review-dialog" aria-labelledby="review-title">
+      <form id="review-form" method="dialog">
+        <header class="dialog-header">
+          <div>
+            <p class="eyebrow">POST MATCH REVIEW</p>
+            <h2 id="review-title">対戦を記録</h2>
+          </div>
+          <button class="icon-button" id="close-dialog" type="button" aria-label="閉じる">×</button>
+        </header>
+
+        <section class="form-section">
+          <h3>対戦結果</h3>
+          <div class="field-grid">
+            <label>相手キャラ
+              <select id="opponent" required></select>
+            </label>
+            <label>セット結果
+              <select id="result" required>
+                <option value="2-0">勝利 2-0</option>
+                <option value="2-1">勝利 2-1</option>
+                <option value="1-2">敗北 1-2</option>
+                <option value="0-2">敗北 0-2</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="form-section distance-section">
+          <div class="section-label-row">
+            <div>
+              <h3>主な立ち回り距離</h3>
+              <p>エドの立ち姿の幅を1.0として記録</p>
+            </div>
+            <output id="distance-output" for="distance">2.0</output>
+          </div>
+          <div class="distance-stage" aria-label="立ち回り距離の視覚入力">
+            <div class="stage-line"></div>
+            <div id="ed-figure" class="fighter ed" aria-hidden="true"><span>ED</span></div>
+            <div class="fighter opponent" aria-hidden="true"><span>OPP</span></div>
+            <span class="stage-start">0.0</span><span class="stage-end">4.0</span>
+          </div>
+          <input id="distance" type="range" min="0" max="4" step="0.1" value="2" aria-label="立ち回り距離" />
+          <p class="field-help">近いほど密着・起き攻め寄り、2.0前後は中距離、4.0は遠距離を意味する。</p>
+        </section>
+
+        <section class="form-section">
+          <div class="section-label-row"><div><h3>主なダメージ源</h3><p>相手へ通した得点源。最大3件。</p></div><button id="add-damage-source" class="text-button" type="button">＋追加</button></div>
+          <div id="damage-sources" class="source-list"></div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-label-row"><div><h3>主な被ダメージ源</h3><p>大きく減らされたきっかけ。最大3件。</p></div><button id="add-damage-taken" class="text-button" type="button">＋追加</button></div>
+          <div id="damage-taken" class="source-list"></div>
+        </section>
+
+        <section class="form-section">
+          <div class="section-label-row"><div><h3>目立った出来事</h3><p>取り逃し・局面変化・外的要因。最大3件。</p></div><span id="event-count" class="counter">0 / 3</span></div>
+          <div id="event-groups" class="event-groups"></div>
+        </section>
+
+        <section class="form-section compact-section">
+          <label class="checkbox-label"><input id="review-later" type="checkbox" /> 後でリプレイを見直す</label>
+          <label>一言メモ <textarea id="note" rows="2" placeholder="転機、試したこと、調べる技など"></textarea></label>
+        </section>
+
+        <footer class="dialog-footer">
+          <button id="cancel-review" class="secondary-button" type="button">キャンセル</button>
+          <button class="primary-button" type="submit">記録する</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <template id="source-row-template">
+      <div class="source-row">
+        <select class="source-category" aria-label="ダメージの種類"></select>
+        <select class="damage-band" aria-label="概算ダメージ"></select>
+        <button class="remove-row icon-button" type="button" aria-label="この項目を削除">×</button>
+      </div>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
