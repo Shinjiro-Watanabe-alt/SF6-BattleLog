@@ -16,7 +16,10 @@
           <p class="eyebrow">SF6 · ED PERSONAL ANALYSIS</p>
           <h1>ED Match Note</h1>
         </div>
-        <button id="new-review" class="primary-button" type="button">対戦を記録</button>
+        <div class="header-actions">
+          <button id="new-video" class="secondary-button" type="button">動画を登録</button>
+          <button id="new-review" class="primary-button" type="button">対戦を記録</button>
+        </div>
       </header>
 
       <section class="summary-grid" aria-label="直近の記録">
@@ -52,10 +55,26 @@
       <section class="panel">
         <div class="section-heading">
           <div>
+            <p class="eyebrow">DAILY VIDEO LOG</p>
+            <h2>分析待ちの動画</h2>
+          </div>
+          <button id="new-video-inline" class="text-button" type="button">＋動画を登録</button>
+        </div>
+        <p class="panel-help">限定公開のURLを日付ごとに登録。セット記録へ動画内の開始・終了時間を紐付けられる。</p>
+        <div id="video-logs" class="video-list"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading">
+          <div>
             <p class="eyebrow">RECENT MATCHES</p>
             <h2>最近の対戦</h2>
           </div>
-          <button id="export-data" class="text-button" type="button">書き出し</button>
+          <div class="section-actions">
+            <button id="download-template" class="text-button" type="button">入力テンプレート</button>
+            <label class="text-button file-button">取り込む<input id="import-data" type="file" accept="application/json" hidden /></label>
+            <button id="export-data" class="text-button" type="button">書き出し</button>
+          </div>
         </div>
         <div id="recent-matches" class="match-list"></div>
       </section>
@@ -74,6 +93,9 @@
         <section class="form-section">
           <h3>対戦結果</h3>
           <div class="field-grid">
+            <label>動画ログ（任意）
+              <select id="video-id"></select>
+            </label>
             <label>相手キャラ
               <select id="opponent" required></select>
             </label>
@@ -86,6 +108,11 @@
               </select>
             </label>
           </div>
+          <div class="time-grid">
+            <label>動画内の開始時間（任意）<input id="video-start" type="text" inputmode="numeric" placeholder="例 12:34" /></label>
+            <label>動画内の終了時間（任意）<input id="video-end" type="text" inputmode="numeric" placeholder="例 16:52" /></label>
+          </div>
+          <p class="field-help">1日分の長い動画なら、セットの開始・終了時間を残しておくと後からすぐ見返せる。</p>
         </section>
 
         <section class="form-section distance-section">
@@ -129,6 +156,28 @@
         <footer class="dialog-footer">
           <button id="cancel-review" class="secondary-button" type="button">キャンセル</button>
           <button class="primary-button" type="submit">記録する</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog id="video-dialog" class="review-dialog" aria-labelledby="video-title">
+      <form id="video-form" method="dialog">
+        <header class="dialog-header">
+          <div>
+            <p class="eyebrow">DAILY VIDEO LOG</p>
+            <h2 id="video-title">動画を登録</h2>
+          </div>
+          <button class="icon-button" id="close-video-dialog" type="button" aria-label="閉じる">×</button>
+        </header>
+        <section class="form-section compact-section">
+          <label>日付 <input id="video-date" type="date" required /></label>
+          <label>動画タイトル <input id="video-name" type="text" required placeholder="例：ランクマ 2026-09-10 夜" /></label>
+          <label>YouTube限定公開URL <input id="video-url" type="url" required placeholder="https://www.youtube.com/watch?v=..." /></label>
+          <label>メモ（任意） <textarea id="video-note" rows="2" placeholder="録画範囲、ランク帯、確認したいことなど"></textarea></label>
+        </section>
+        <footer class="dialog-footer">
+          <button id="cancel-video" class="secondary-button" type="button">キャンセル</button>
+          <button class="primary-button" type="submit">動画を登録</button>
         </footer>
       </form>
     </dialog>
