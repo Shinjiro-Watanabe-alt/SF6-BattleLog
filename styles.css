@@ -25,14 +25,18 @@ h1, h2, h3, p { margin-top: 0; } h1 { margin-bottom: 0; font-size: clamp(1.6rem,
 .insight strong, .match-item strong { display: block; margin-bottom: .25rem; }
 .insight p, .match-item p, .video-item p, .empty-message, .panel-help { margin-bottom: 0; color: #b8c4d5; font-size: .88rem; line-height: 1.45; }
 .match-meta { color: #95a6bf; font-size: .78rem; }
-.video-item { border-left-color: #5fb4a6; }
+.milestone-open-button { margin-top: .55rem; padding: 0; font-size: .82rem; }
+.video-home-panel { margin-top: 0; }.video-item { border-left-color: #5fb4a6; }
 .video-item strong { display: block; margin-bottom: .2rem; }
 .video-item a { color: #aebeff; font-size: .82rem; overflow-wrap: anywhere; }
+.video-card-summary { display: flex; flex-wrap: wrap; gap: .35rem .7rem; margin: .55rem 0; color: #bcd7cf; font-size: .78rem; }
+.video-detail-button { margin-top: .6rem; padding: 0; font-size: .82rem; }
 .panel-help { margin-top: .6rem; }
 .file-button { display: inline-flex; align-items: center; cursor: pointer; }
 .review-dialog { width: min(100%, 680px); max-height: 92vh; padding: 0; border: 1px solid #35425b; border-radius: 1rem; color: #edf2fa; background: #101722; }
 .review-dialog::backdrop { background: #030509bd; }
 .review-dialog form { padding: 1rem; overflow: auto; max-height: 92vh; }
+.dialog-content { padding: 1rem; overflow: auto; max-height: 92vh; }
 .dialog-header { padding-bottom: 1rem; border-bottom: 1px solid #28344a; }
 .form-section { padding: 1rem 0; border-bottom: 1px solid #28344a; }
 .form-section p { margin-bottom: .7rem; }
@@ -64,4 +68,18 @@ input[type="range"] { width: 100%; accent-color: #9b84ff; }
 .counter { padding: .25rem .45rem; border-radius: 99px; color: #b6c4d7; background: #263249; font-size: .78rem; }
 .checkbox-label { display: flex; align-items: center; gap: .55rem; }.checkbox-label input { width: 1.1rem; height: 1.1rem; accent-color: #9b84ff; }
 .compact-section { display: grid; gap: .8rem; }.dialog-footer { padding-top: 1rem; }
-@media (max-width: 440px) { .app-header { align-items: flex-start; flex-direction: column; }.header-actions { width: 100%; }.header-actions .primary-button, .header-actions .secondary-button { flex: 1; }.summary-card { padding: .7rem; }.summary-card strong { font-size: 1rem; }.summary-card span, .summary-card small { font-size: .7rem; }.field-grid, .time-grid { grid-template-columns: 1fr; }.section-actions { gap: .2rem; }.source-row { grid-template-columns: 1fr 5.2rem 2.2rem; }.review-dialog { width: 100%; max-height: 100vh; border-radius: 0; }.review-dialog form { max-height: 100vh; }.fighter { transform: scale(.88); transform-origin: bottom center; } }
+.match-detail-meta { margin: .85rem 0 0; color: #a7b5ca; font-size: .84rem; line-height: 1.45; }
+.video-detail-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; margin: 1rem 0 0; }
+.video-detail-actions .text-button { padding: .3rem .1rem; }
+.daily-summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .45rem; }
+.daily-summary-grid article { display: grid; gap: .15rem; padding: .65rem; border-radius: .55rem; background: #192334; }.daily-summary-grid span { color: #9fb0c8; font-size: .72rem; }.daily-summary-grid strong { color: #ecf5ff; font-size: .92rem; }
+.daily-focus { margin-top: .85rem; }.daily-focus p { margin: .35rem 0; color: #cad6e7; font-size: .84rem; line-height: 1.45; }
+.milestone-list { display: grid; gap: .65rem; margin-top: .85rem; }
+.milestone-item { padding: .8rem; border: 1px solid #35425b; border-left: 3px solid #c18cff; border-radius: .55rem; background: #171d2a; }
+.milestone-heading, .milestone-actions { display: flex; align-items: center; justify-content: space-between; gap: .5rem; }
+.milestone-heading > div, .milestone-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.milestone-badge, .milestone-phase, .milestone-status { display: inline-flex; padding: .18rem .45rem; border-radius: 99px; font-size: .72rem; font-weight: 650; }
+.milestone-badge { background: #49336d; color: #eadbff; }.milestone-phase { background: #243650; color: #cbdfff; }.milestone-status { background: #273249; color: #cad4e4; white-space: nowrap; }
+.milestone-item p { margin: .7rem 0 .45rem; color: #d4deed; font-size: .88rem; line-height: 1.45; }.milestone-item strong { color: #bcd3fa; font-size: .82rem; line-height: 1.4; }
+.milestone-actions { justify-content: flex-start; margin-top: .7rem; }.danger-button { color: #ff9fa8; }
+@media (max-width: 440px) { .app-header { align-items: flex-start; flex-direction: column; }.header-actions { width: 100%; }.header-actions .primary-button, .header-actions .secondary-button { flex: 1; }.summary-card { padding: .7rem; }.summary-card strong { font-size: 1rem; }.summary-card span, .summary-card small { font-size: .7rem; }.field-grid, .time-grid { grid-template-columns: 1fr; }.section-actions { gap: .2rem; }.source-row { grid-template-columns: 1fr 5.2rem 2.2rem; }.review-dialog { width: 100%; max-height: 100vh; border-radius: 0; }.review-dialog form, .dialog-content { max-height: 100vh; }.daily-summary-grid { grid-template-columns: repeat(2, 1fr); }.fighter { transform: scale(.88); transform-origin: bottom center; } }
